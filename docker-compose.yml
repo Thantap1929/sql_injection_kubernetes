@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+  db:
+    build: ./database  # โฟลเดอร์ที่เก็บ Dockerfile
+    image: mysql_kub
+    container_name: sql_inject
+    restart: always
+    ports:
+      - '3306:3306'
+  web:
+    build: ./web
+    image: php_kub
+    restart: always
+    # volumes:
+    #   - ./web/sql_web:/var/www/html
+    ports:
+      - "80:80"
+
+

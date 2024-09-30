@@ -1,0 +1,24 @@
+คำอธิบายภาพรวม:
+1. Apache Service
+* apiVersion: v1: ใช้ API เวอร์ชัน v1 สำหรับการสร้าง Service
+* kind: Service: ระบุว่าทรัพยากรนี้คือ Service
+* metadata.name: ชื่อของ Service นี้คือ apache-service
+* spec.selector: กำหนดให้เลือก Pod ที่มี label app: apache
+* ports:
+    * protocol: ใช้โปรโตคอล TCP
+    * port: พอร์ตที่สามารถเข้าถึงได้จากภายนอก (80)
+    * targetPort: พอร์ตที่ให้บริการภายใน container (80)
+* type: NodePort: กำหนดให้ Service นี้เป็นประเภท NodePort ซึ่งทำให้สามารถเข้าถึง Service นี้จากภายนอกคลัสเตอร์ Kubernetes ผ่าน Node IP และ NodePort
+2. MySQL Service
+* apiVersion: v1: ใช้ API เวอร์ชัน v1 สำหรับการสร้าง Service
+* kind: Service: ระบุว่าทรัพยากรนี้คือ Service
+* metadata.name: ชื่อของ Service นี้คือ mysql-service
+* spec.selector: กำหนดให้เลือก Pod ที่มี label app: mysql
+* ports:
+    * protocol: ใช้โปรโตคอล TCP
+    * port: พอร์ตที่สามารถเข้าถึงได้จากภายนอก (3306)
+    * targetPort: พอร์ตที่ให้บริการภายใน container (3306)
+* type: ClusterIP: กำหนดให้ Service นี้เป็นประเภท ClusterIP ซึ่งทำให้ Service นี้สามารถเข้าถึงได้ภายในคลัสเตอร์ Kubernetes เท่านั้น
+หมายเหตุเพิ่มเติม:
+* NodePort ทำให้ Apache Service สามารถเข้าถึงจากภายนอกได้ง่ายขึ้น โดยคุณสามารถเข้าถึงผ่าน IP ของ Node และพอร์ตที่กำหนด
+* ClusterIP สำหรับ MySQL Service จะทำให้ Service นี้สามารถเข้าถึงได้เฉพาะจากภายในคลัสเตอร์ ซึ่งเหมาะสำหรับการสื่อสารระหว่างบริการต่าง ๆ ภายใน Kubernetes โดยไม่เปิดให้เข้าถึงจากภายนอก

@@ -1,0 +1,28 @@
+apiVersion: v1  # ระบุเวอร์ชัน API ที่ใช้งาน (v1)
+kind: Pod  # ประเภทของ resource ในที่นี้คือ Pod
+metadata:
+  name: linux-pod  # ชื่อของ Pod ที่คุณตั้งไว้
+spec:
+  containers:  # รายการ container ภายใน Pod นี้
+  - name: busybox  # ชื่อ container นี้คือ busybox
+    image: busybox  # ชื่อ image ที่ใช้สร้าง container นี้ (ในที่นี้คือ busybox)
+    command: ['sh', '-c', 'sleep 3600']  # คำสั่งที่ให้ container ทำงานนาน 3600 วินาที (1 ชั่วโมง)
+  
+  - name: apache-container  # ชื่อ container นี้คือ apache-container
+    image: php_kub:latest  # ใช้ image ที่ชื่อ php_kub ใน tag เวอร์ชันล่าสุด
+    ports:
+    - containerPort: 80  # เปิดพอร์ต 80 ใน container (พอร์ตสำหรับ HTTP)
+    resources: {}  # ยังไม่ได้กำหนด resource limits หรือ requests
+    imagePullPolicy: IfNotPresent  # ดึง image ใหม่ถ้าไม่มี image นี้ใน local เท่านั้น
+  
+  - name: mysql-container  # ชื่อ container นี้คือ mysql-container
+    image: mysql_kub:latest  # ใช้ image ที่ชื่อ mysql_kub ใน tag เวอร์ชันล่าสุด
+    ports:
+    - containerPort: 3306  # เปิดพอร์ต 3306 ใน container (พอร์ตสำหรับ MySQL)
+    env:
+    - name: MYSQL_ROOT_PASSWORD  # กำหนด environment variable
+      value: root  # รหัสผ่านของ root user ใน MySQL
+    resources: {}  # ยังไม่ได้กำหนด resource limits หรือ requests
+    imagePullPolicy: IfNotPresent  # ดึง image ใหม่ถ้าไม่มี image นี้ใน local เท่านั้น
+
+  restartPolicy: Always  # ให้ Pod restart container เสมอเมื่อหยุดทำงาน

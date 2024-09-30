@@ -1,0 +1,21 @@
+apiVersion: apps/v1  # ใช้ API เวอร์ชันสำหรับการจัดการ Deployment
+kind: Deployment  # กำหนดประเภท resource เป็น Deployment
+metadata:
+  name: apache-deployment  # ตั้งชื่อ Deployment ว่า apache-deployment
+spec:
+  replicas: 1  # ระบุจำนวน replica (Pod) ที่จะ deploy คือ 1 ตัว
+  selector:
+    matchLabels:
+      app: apache  # Selector ระบุว่าต้องเลือก Pod ที่มี label app: apache
+  template:
+    metadata:
+      labels:
+        app: apache  # ใส่ label ให้ Pod ใน template นี้ เพื่อให้ match กับ selector
+    spec:
+      containers:
+      - name: apacke  # ชื่อ container คือ apache
+        image: php_kub  # ใช้ Docker image ที่ชื่อ mysql_kub (เป็น image ที่คุณสร้างขึ้นเอง)
+        ports:
+        - containerPort: 80  # เปิดพอร์ต 80 ใน container (พอร์ตสำหรับ HTTP)
+        resources: {}  # ยังไม่ได้กำหนด resource limits หรือ requests
+        imagePullPolicy: IfNotPresent  # ดึง image ใหม่เฉพาะกรณีที่ไม่มี image ใน local

@@ -1,0 +1,9 @@
+คุณกำหนด Pod หนึ่งชื่อ linux-pod ซึ่งประกอบด้วย 3 container:
+
+1. busybox container: ใช้ image ชื่อ busybox ทำหน้าที่รันคำสั่ง sleep 3600 ซึ่งทำให้ container ทำงานนาน 1 ชั่วโมง
+2. apache-container: ใช้ image ชื่อ php_kub:latest สำหรับรัน Apache บนพอร์ต 80 ภายใน container โดยกำหนดให้ดึง image ใหม่เฉพาะกรณีที่ไม่มีอยู่ใน local
+3. mysql-container: ใช้ image ชื่อ mysql_kub:latest สำหรับรัน MySQL บนพอร์ต 3306 โดยตั้งรหัสผ่านของ root user เป็น root และกำหนดให้ดึง image ใหม่เฉพาะกรณีที่ไม่มีอยู่ใน local
+
+Pod นี้มีนโยบายการ restart คือ Always เพื่อให้ container ถูกรีสตาร์ทเสมอหากมีปัญหาหรือหยุดทำงาน
+
+สรุปได้ว่าไฟล์นี้กำหนดให้มี Pod ที่รวมบริการทั้ง Apache และ MySQL พร้อมกับ container utility แบบ busybox เพื่อรันคำสั่งเพิ่มเติม

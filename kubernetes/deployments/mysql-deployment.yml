@@ -1,0 +1,21 @@
+apiVersion: apps/v1  # ใช้ API เวอร์ชันสำหรับการจัดการ Deployment
+kind: Deployment  # กำหนดประเภท resource เป็น Deployment
+metadata: 
+  name: mysql-deployment  # ตั้งชื่อ Deployment ว่า mysql-deployment
+spec:
+  replicas: 1  # ระบุจำนวน replicas (Pod) ที่จะ deploy คือ 1 ตัว
+  selector: 
+    matchLabels:
+      app: mysql  # Selector ระบุว่าต้องเลือก Pod ที่มี label app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql  # ใส่ label ให้ Pod ใน template นี้ เพื่อให้ match กับ selector
+    spec:
+      containers:
+      - name: mysql  # ชื่อ container คือ mysql
+        image: mysql_kub  # ใช้ Docker image ที่ชื่อ mysql_kub
+        ports:
+        - containerPort: 3306  # เปิดพอร์ต 3306 ใน container (พอร์ตสำหรับ MySQL)
+        resources: {}  # ยังไม่ได้กำหนด resource limits หรือ requests
+        imagePullPolicy: IfNotPresent  # ดึง image ใหม่เฉพาะกรณีที่ไม่มี image ใน local

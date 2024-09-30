@@ -1,0 +1,28 @@
+apiVersion: v1  # ใช้ API เวอร์ชัน v1 สำหรับ Service
+kind: Service  # กำหนดประเภท resource เป็น Service
+metadata:
+  name: apache-service  # ตั้งชื่อ Service ว่า apache-service
+spec:
+  selector:
+    app: apache  # เลือก Pod ที่มี label app: apache
+  ports:
+    - protocol: TCP  # ใช้โปรโตคอล TCP
+      port: 80  # พอร์ตที่สามารถเข้าถึงจากภายนอก
+      targetPort: 80  # พอร์ตที่ให้บริการภายใน container
+  type: NodePort  # ใช้ NodePort เพื่อเชื่อมต่อกับภายนอก
+
+
+---
+apiVersion: v1  # ใช้ API เวอร์ชัน v1 สำหรับ Service
+kind: Service  # กำหนดประเภท resource เป็น Service
+metadata:
+  name: mysql-service  # ตั้งชื่อ Service ว่า mysql-service
+spec:
+  selector:
+    app: mysql  # เลือก Pod ที่มี label app: mysql
+  ports:
+    - protocol: TCP  # ใช้โปรโตคอล TCP
+      port: 3306  # พอร์ตที่สามารถเข้าถึงจากภายนอก
+      targetPort: 3306  # พอร์ตที่ให้บริการภายใน container
+  type: ClusterIP  # ใช้ ClusterIP เพื่อเชื่อมต่อภายในคลัสเตอร์ Kubernetes
+

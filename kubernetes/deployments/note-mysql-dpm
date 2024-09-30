@@ -1,0 +1,16 @@
+คำอธิบายภาพรวม:
+1. apiVersion: apps/v1: ใช้ API เวอร์ชันนี้สำหรับการสร้างและจัดการ Deployment ซึ่งช่วยให้ Kubernetes จัดการกับหลาย ๆ Pod ในการทำงานร่วมกัน
+2. kind: Deployment: ระบุว่าทรัพยากรที่สร้างคือ Deployment
+3. metadata.name: ชื่อของ Deployment นี้คือ mysql-deployment
+4. spec.replicas: กำหนดจำนวน replicas คือ 1 หมายความว่า Pod จะมีเพียง 1 instance ที่ทำงาน
+5. selector.matchLabels: เลือก Pod ที่มี label app: mysql ซึ่งจะทำให้ Deployment จัดการ Pod ที่ตรงกับ label นี้
+6. template: นี่คือ template ที่จะใช้สร้าง Pod ใหม่เมื่อ Deployment สร้าง Pod ขึ้นมา
+    * metadata.labels: ใส่ label app: mysql ให้กับ Pod ที่ถูกสร้างจาก template นี้
+    * spec.containers: ระบุ container ที่จะสร้างภายใน Pod
+        * name: ชื่อ container คือ mysql
+        * image: ใช้ Docker image ที่ชื่อ mysql_kub ซึ่งคุณได้สร้างขึ้น
+        * ports: เปิดพอร์ต 3306 สำหรับให้บริการ MySQL ภายใน container
+        * resources: ยังไม่มีการกำหนดขีดจำกัดหรือการจองทรัพยากรสำหรับ container นี้
+        * imagePullPolicy: ตั้งค่าให้ดึง image ใหม่จาก registry เฉพาะกรณีที่ไม่มี image ใน local เท่านั้น (IfNotPresent)
+หมายเหตุเพิ่มเติม:
+Deployment นี้จะช่วยให้คุณสามารถจัดการกับการรัน MySQL ใน Kubernetes ได้ง่ายขึ้น โดยคุณสามารถปรับขนาดจำนวน replicas ได้ตามต้องการในอนาคต นอกจากนี้ยังช่วยให้ Kubernetes ควบคุมการทำงานของ Pod ได้อย่างมีประสิทธิภาพด้วยนโยบายการจัดการที่กำหนดไว้ใน Deployment นี้

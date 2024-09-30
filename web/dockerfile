@@ -1,0 +1,6 @@
+FROM php:7.4-apache
+
+COPY ./sql_web /var/www/html/
+
+RUN docker-php-ext-install mysqli
+RUN echo "DirectoryIndex login.php" >> /etc/apache2/apache2.conf
