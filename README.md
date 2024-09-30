@@ -32,7 +32,6 @@ The architecture consists of the following components:
 - **MySQL Database**: Stores user data and allows for SQL injection testing.
 - **Kubernetes**: Manages the deployment and scaling of both the Apache and MySQL containers.
 
-![Architecture Diagram](path/to/architecture-diagram.png) <!-- Replace with actual path -->
 
 ## Deployment
 
